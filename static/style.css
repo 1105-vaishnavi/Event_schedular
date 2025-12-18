@@ -1,0 +1,211 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+body {
+    background: linear-gradient(135deg, #ecfeff, #f0fdfa);
+    min-height: 100vh;
+}
+
+/* ================= LAYOUT ================= */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #2563eb, #0ea5a4, #22c55e);
+    padding: 25px 20px;
+    color: #ffffff;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* ================= NAV BUTTONS ================= */
+.nav-btn {
+    display: block;
+    padding: 14px 18px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    color: #ecfeff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(6px);
+}
+
+/* ACTIVE BUTTON */
+.nav-btn.active {
+    background: #ffffff;
+    color: #0f766e;
+    font-weight: 600;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+/* ================= MAIN CONTENT ================= */
+.main-content {
+    flex: 1;
+    padding: 35px 45px;
+     background:
+        linear-gradient(
+            rgba(236, 254, 255, 0.9),
+            rgba(240, 253, 250, 0.9)
+        ),
+        url("..static\images\images.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* ================= HEADINGS ================= */
+.main-content h1 {
+    font-size: 30px;
+    color: #0f172a;
+}
+
+.main-content h2 {
+    font-size: 20px;
+    color: #155e75;
+    margin-bottom: 20px;
+}
+
+/* ================= FLASH ================= */
+.flash {
+    background: linear-gradient(135deg, #cffafe, #dcfce7);
+    border-left: 5px solid #0ea5a4;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* ================= CARDS ================= */
+form, .card {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+/* ================= FORM ================= */
+label {
+    display: block;
+    font-weight: 500;
+    color: #134e4a;
+    margin-top: 15px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 12px;
+    border: 1px solid #99f6e4;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #0ea5a4;
+    box-shadow: 0 0 0 3px rgba(14,165,164,0.25);
+}
+
+/* ================= BUTTON ================= */
+button {
+    margin-top: 22px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #0ea5a4, #22c55e);
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(34,197,94,0.45);
+}
+
+/* ================= LIST ================= */
+ul {
+    list-style: none;
+}
+
+li {
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    border-left: 6px solid #0ea5a4;
+}
+
+/* ================= TABLE ================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+table th {
+    background: linear-gradient(135deg, #2563eb, #0ea5a4);
+    color: white;
+    padding: 16px;
+}
+
+table td {
+    padding: 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #ccfbf1;
+}
+
+table tr:nth-child(even) td {
+    background: #f0fdfa;
+}
+
+/* ================= CONFLICT ================= */
+.conflict {
+    border-left-color: #dc2626;
+    background: #fee2e2;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .nav-btn {
+        margin: 6px;
+    }
+}

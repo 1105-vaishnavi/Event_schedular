@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Conflict Detection</h2>
+<ul>
+    {% for c in conflicts %}
+    <li>
+        ❌ {{ c.resource.resource_name }} is conflicting in
+        <strong>{{ c.event.title }}</strong>
+    </li>
+    {% else %}
+    <li>✅ No conflicts detected</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Add Resource</h2>
+<form method="post">
+    <label>Resource Name</label>
+<input 
+    name="name" 
+    placeholder="e.g., Conference Room A / John Smith / Projector 1"
+    required
+>
+
+
+    <label>Resource Type</label>
+<select name="type" required>
+    <option value="">-- Select Resource Type --</option>
+    <option value="Room">Room</option>
+    <option value="Instructor">Instructor</option>
+    <option value="Equipment">Equipment</option>
+</select>
+
+
+    <button>Add Resource</button>
+</form>
+
+<h2>Resources</h2>
+<ul>
+    {% for r in resources %}
+    <li>{{ r.resource_name }} ({{ r.resource_type }})</li>
+    {% else %}
+    <li>No resources added</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

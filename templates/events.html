@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Add Event</h2>
+<form method="post">
+    <label>Event Title</label>
+    <input name="title" required>
+
+    <label>Start Time</label>
+    <input type="datetime-local" name="start" required>
+
+    <label>End Time</label>
+    <input type="datetime-local" name="end" required>
+
+    <label>Description</label>
+    <textarea name="description"></textarea>
+
+    <button>Add Event</button>
+</form>
+
+{% endblock %}

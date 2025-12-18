@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Resource Utilisation Report</h2>
+
+<form method="post">
+    <label>Start Date & Time</label>
+    <input type="datetime-local" name="start" required>
+
+    <label>End Date & Time</label>
+    <input type="datetime-local" name="end" required>
+
+    <button>Generate Report</button>
+</form>
+
+
+<table>
+    <tr>
+        <th>Resource</th>
+        <th>Total Hours Utilised</th>
+        <th>Upcoming Bookings</th>
+    </tr>
+    {% for r in report %}
+    <tr>
+        <td>{{ r.resource }}</td>
+        <td>{{ r.hours }}</td>
+        <td>{{ r.bookings }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

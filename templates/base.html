@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Scheduler</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2 class="logo">Dashboard</h2>
+
+        <a href="/events" class="nav-btn {% if request.path == '/events' %}active{% endif %}">
+            Events
+        </a>
+
+        <a href="/resources" class="nav-btn {% if request.path == '/resources' %}active{% endif %}">
+            Resources
+        </a>
+
+        <a href="/allocate" class="nav-btn {% if request.path == '/allocate' %}active{% endif %}">
+            Allocate
+        </a>
+
+        <a href="/conflicts" class="nav-btn {% if request.path == '/conflicts' %}active{% endif %}">
+            Conflicts
+        </a>
+
+        <a href="/report" class="nav-btn {% if request.path == '/report' %}active{% endif %}">
+            Report
+        </a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+       <h1>Event Scheduler System</h1>
+       <p style="color:#6b7280; margin-bottom:25px;">
+    Manage events, resources, and utilisation efficiently
+</p>
+
+
+
+        {% with messages = get_flashed_messages() %}
+            {% for msg in messages %}
+                <div class="flash">{{ msg }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+</body>
+</html>
