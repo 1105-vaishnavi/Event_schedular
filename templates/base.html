@@ -31,16 +31,21 @@
         <a href="/report" class="nav-btn {% if request.path == '/report' %}active{% endif %}">
             Report
         </a>
+
+        <!-- LOGOUT BUTTON -->
+        <div style="margin-top:auto;">
+            <a href="/logout" class="nav-btn">
+                Logout
+            </a>
+        </div>
     </aside>
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
-       <h1>Event Scheduler System</h1>
-       <p style="color:#6b7280; margin-bottom:25px;">
-    Manage events, resources, and utilisation efficiently
-</p>
-
-
+        <h1>Event Scheduler System</h1>
+        <p style="color:#6b7280; margin-bottom:25px;">
+            Manage events, resources, and utilisation efficiently
+        </p>
 
         {% with messages = get_flashed_messages() %}
             {% for msg in messages %}

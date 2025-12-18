@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, session
 from datetime import datetime
 from config import Config
-from models import db, Event, Resource, EventResourceAllocation
+from models import db, Event, Resource, EventResourceAllocation, User
+from functools import wraps
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -11,6 +12,17 @@ with app.app_context():
     db.create_all()
 
 
+# -------------------- LOGIN REQUIRED DECORATOR --------------------
+def login_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if "user_id" not in session:
+            return redirect("/login")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+# -------------------- CONFLICT CHECK --------------------
 def check_conflict(resource_id, start, end, ignore_event=None):
     allocations = EventResourceAllocation.query.filter_by(resource_id=resource_id).all()
 
@@ -23,14 +35,16 @@ def check_conflict(resource_id, start, end, ignore_event=None):
             return True
     return False
 
-#HOME REDIRECT
+
+# -------------------- HOME --------------------
 @app.route("/")
 def home():
     return redirect("/events")
 
 
-#EVENTS
+# -------------------- EVENTS --------------------
 @app.route("/events", methods=["GET", "POST"])
+@login_required
 def events():
     if request.method == "POST":
         title = request.form["title"]
@@ -55,8 +69,9 @@ def events():
     return render_template("events.html", events=Event.query.all())
 
 
-#RESOURCES
+# -------------------- RESOURCES --------------------
 @app.route("/resources", methods=["GET", "POST"])
+@login_required
 def resources():
     if request.method == "POST":
         name = request.form["name"]
@@ -73,8 +88,9 @@ def resources():
     return render_template("resources.html", resources=Resource.query.all())
 
 
-#ALLOCATE RESOURCE
+# -------------------- ALLOCATE RESOURCE --------------------
 @app.route("/allocate", methods=["GET", "POST"])
+@login_required
 def allocate():
     if request.method == "POST":
         event_id = int(request.form["event"])
@@ -101,8 +117,9 @@ def allocate():
     )
 
 
-#CONFLICT VIEW
+# -------------------- CONFLICT VIEW --------------------
 @app.route("/conflicts")
+@login_required
 def conflicts():
     conflict_list = []
 
@@ -118,8 +135,9 @@ def conflicts():
     return render_template("conflicts.html", conflicts=conflict_list)
 
 
-#RESOURCE UTILISATION REPORT
+# -------------------- RESOURCE UTILISATION REPORT --------------------
 @app.route("/report", methods=["GET", "POST"])
+@login_required
 def report():
     report_data = []
 
@@ -152,3 +170,55 @@ def report():
     return render_template("report.html", report=report_data)
 
 
+# -------------------- SIGNUP --------------------
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if User.query.filter_by(username=username).first():
+            flash("❌ Username already exists")
+            return redirect("/signup")
+
+        user = User(username=username)
+        user.set_password(password)
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash("✅ Signup successful. Please login.")
+        return redirect("/login")
+
+    return render_template("signup.html")
+
+
+# -------------------- LOGIN --------------------
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and user.check_password(password):
+            session["user_id"] = user.id
+            flash("✅ Login successful")
+            return redirect("/events")
+
+        flash("❌ Invalid credentials")
+        return redirect("/login")
+
+    return render_template("login.html")
+
+
+# -------------------- LOGOUT --------------------
+@app.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    flash("Logged out successfully")
+    return redirect("/login")
+
+if __name__ == "__main__":
+    app.run(debug=True)
